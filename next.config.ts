@@ -5,7 +5,7 @@ const CSP = [
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:",
   "style-src 'self' 'unsafe-inline' https:",
   "img-src 'self' data: https:",
-  "connect-src 'self' https://api.springbig.com https://api.covasoftware.com https://*.pinecone.io https://*.weaviate.cloud https://api.openai.com",
+  "connect-src 'self'",
   "font-src 'self' data:",
   "frame-ancestors 'none'",
 ].join('; ');
@@ -22,8 +22,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  experimental: { serverActions: true },
-  images: { domains: ['images.unsplash.com', 'cdn.example.com'] },
+  images: {
+    domains: ['images.unsplash.com', 'cdn.example.com'],
+  },
   async headers() {
     return [
       {
@@ -31,6 +32,9 @@ const nextConfig: NextConfig = {
         headers: securityHeaders,
       },
     ];
+  },
+  async rewrites() {
+    return [];
   },
 };
 
