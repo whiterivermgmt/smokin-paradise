@@ -14,8 +14,8 @@ export interface Product {
   hotDeal?: boolean;
   bestSeller?: boolean;
   description?: ReactNode;
-  weight: string; // Added
-  dimensions: string; // Added
+  weight?: string; // Added
+  dimensions?: string; // Added
 
   dripTipMaterial?: string; 
   bongs?: string;

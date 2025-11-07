@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -27,6 +27,8 @@ const ProductCard = ({
   const discountedPrice = product.hotDeal
     ? (product.price * (1 - discount)).toFixed(2)
     : null;
+
+  const rating = product.rating ?? 0; // fallback if undefined
 
   return (
     <div className="relative bg-white rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-xl transition duration-300 group">
@@ -72,21 +74,17 @@ const ProductCard = ({
         </Link>
 
         {/* Rating */}
-        {product.rating && (
-          <div className="flex items-center gap-1 mt-1">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${
-                  i < product.rating ? "text-yellow-400" : "text-gray-300"
-                }`}
-              />
-            ))}
-            {product.reviews && (
-              <span className="text-gray-500 text-xs ml-1">({product.reviews})</span>
-            )}
-          </div>
-        )}
+        <div className="flex items-center gap-1 mt-1">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className={`w-4 h-4 ${i < rating ? "text-yellow-400" : "text-gray-300"}`}
+            />
+          ))}
+          {product.reviews && (
+            <span className="text-gray-500 text-xs ml-1">({product.reviews})</span>
+          )}
+        </div>
 
         {/* Price */}
         <div className="mt-2">

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Product } from "@/lib/products";
 
 interface HomeProductsProps {
@@ -34,7 +35,7 @@ const HomeProducts: React.FC<HomeProductsProps> = ({ title, items }) => {
   const next = () => setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
 
   // Calculate translateX for smooth centering
-  const itemWidth = 288 + 24; // card width + gap (w-72 + gap-6)
+  const itemWidth = 288 + 24; // card width + gap
   const translateX = -(currentIndex * itemWidth);
 
   return (
@@ -62,13 +63,17 @@ const HomeProducts: React.FC<HomeProductsProps> = ({ title, items }) => {
             {items.map((product) => (
               <Link key={product.id} href={`/shop/${product.slug}`}>
                 <motion.div
-                  className="flex-shrink-0 w-72 bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                  className="shrink-0 w-72 bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform"
                 >
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-64 object-cover"
-                  />
+                  <div className="relative w-full h-64">
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      fill
+                      className="object-cover rounded-t-2xl"
+                      sizes="(max-width: 1024px) 100vw, 288px"
+                    />
+                  </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{product.title}</h3>
                     <p className="text-orange-500 font-bold">${product.price.toFixed(2)}</p>
